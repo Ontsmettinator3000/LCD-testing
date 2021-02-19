@@ -3,7 +3,7 @@
 #define BUTTON_S1 2
 
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 6;
-uint8_t count = 0;
+int count = 0;
 bool buttonpressed=false;
 
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
@@ -28,10 +28,25 @@ void loop() {
   // (note: line 1 is the second row, since counting begins with 0):
   if(buttonpressed){
 count++;
+count %=4;
 
 lcd.clear();
 lcd.setCursor(0, 0);
-
+if(count>0)
+{
+lcd.print("aantal ontsmette");
+lcd.setCursor(0, 1);
+lcd.print("mensen: ");
+lcd.setCursor(8, 1);
+lcd.print(count);
+}
+else 
+{
+  lcd.print("iedereen is ");
+  lcd.setCursor(0, 1);
+  lcd.print("ontsmet");
+}
+/*
 switch (count) {
   case 0:
     lcd.print("#ontsmet = 0");
@@ -53,8 +68,8 @@ switch (count) {
   default:
     count=0;
     break;
-}
-if(count==4) count=0;
+}*/
+
 buttonpressed=false;
 }
 
